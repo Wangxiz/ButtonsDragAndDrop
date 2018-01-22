@@ -8,7 +8,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
@@ -47,19 +52,12 @@ public class MainApp extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("DragTest App");
 
-//        this.primaryStage.getIcons().add(new Image("images/address_books.png"));
+        this.primaryStage.getIcons().add(new Image("images/drag.png"));
         try {
-            // Load root layout from fxml file.
-            // Create the FXMLLoader
             FXMLLoader loader = new FXMLLoader();
-            // Path to the FXML File
             String fxmlDocPath = "src/main/java/DragTest/view/dragtest.fxml";
             FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-
-            // Create the Pane and all Details
             rootLayout = loader.load(fxmlStream);
-
-            // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
 
@@ -73,23 +71,37 @@ public class MainApp extends Application {
         }
     }
 
-    public Button newButton(int index) {
+    public Button newButton(String color) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            // Path to the FXML File
             String fxmlDocPath = "src/main/java/DragTest/view/button.fxml";
             FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
             Button button = loader.load(fxmlStream);
-            String bk_color;
-            switch (index) {
-                case 0: bk_color = "-fx-background-color: yellow;"; break;
-                case 1: bk_color = "-fx-background-color: blue;"; break;
-                case 2: bk_color = "-fx-background-color: green;"; break;
-                case 3: bk_color = "-fx-background-color: black;"; break;
-                case 4: bk_color = "-fx-background-color: gray;"; break;
-                default: bk_color = "-fx-background-color: yellow;";
-            }
-            button.setStyle(bk_color);
+
+            String style =
+                    "-fx-background-color: " + color + ";";
+//                            +
+//                    "-fx-alignment: center;" +
+//                    "-fx-text-alignment: center;" +
+//                    "-fx-text-fill: rgba(255, 255, 255);" +
+//                    "-fx-font-size: 20px;";
+            button.setStyle(style);
+            button.setText(color);
+//            button.setTextAlignment(TextAlignment.CENTER);
+
+            // A browser.
+            WebView  webView = new WebView();
+            WebEngine webEngine = webView.getEngine();
+            webEngine.loadContent("<h3>Note:</h3> This is a " + color + " Button");
+
+            Tooltip  tooltip = new Tooltip();
+            tooltip.setPrefSize(300, 180);
+            tooltip.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+
+            // Set tooltip content
+            tooltip.setGraphic(webView);
+            button.setTooltip(tooltip);
+
             return button;
         } catch (IOException e) {
             e.printStackTrace();
@@ -97,8 +109,7 @@ public class MainApp extends Application {
         }
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Application.launch(args);
     }
 }

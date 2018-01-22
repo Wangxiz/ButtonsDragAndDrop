@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.scene.control.Button?>
-<Button fx:id="button" alignment="CENTER_RIGHT" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#OnClick" textAlignment="CENTER" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DragTest.view.ButtonController" />
+<?import javafx.scene.text.Font?>
+
+
+<Button fx:id="button" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#OnClick" textFill="WHITE" underline="true" wrapText="true" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DragTest.view.ButtonController">
+   <font>
+      <Font name="System Bold" size="20.0" />
+   </font>
+</Button>

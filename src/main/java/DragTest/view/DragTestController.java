@@ -2,6 +2,7 @@ package DragTest.view;
 
 import DragTest.MainApp;
 import DragTest.model.ButtonType;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -11,22 +12,13 @@ import javafx.scene.input.DataFormat;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 
 public class DragTestController {
     // Reference to the main application
     private MainApp mainApp;
-    static final DataFormat BUTTON_TYPE = new DataFormat("ButtonType");
+    private static final DataFormat BUTTON_TYPE = new DataFormat("ButtonType");
 
     public DragTestController() {}
-
-    private Color[] colors = {
-            Color.YELLOW,
-            Color.BLUE,
-            Color.GREEN,
-            Color.BLACK,
-            Color.GRAY
-    };
 
     @FXML
     private TableView<ButtonType> buttonTable;
@@ -81,38 +73,36 @@ public class DragTestController {
 
         // Initialize the person table with the two columns.
         buttonTypeColumn.setCellValueFactory(cellData -> cellData.getValue().typeNameProperty());
-        buttonTypeColumn.setStyle("-fx-alignment: CENTER;");
 
         // source
         buttonTable.setOnDragDetected(event -> {
             int index = buttonTable.getSelectionModel().getFocusedIndex();
-            System.out.println("Select: " + index);
+            String color = mainApp.getButtonTypes().get(index).getTypeName();
+//            System.out.println("Select: " + color);
             // Initiate a drag-and-drop gesture
             Dragboard dragboard = buttonTable.startDragAndDrop(TransferMode.COPY_OR_MOVE);
 
-            // Put the the selected items to the dragboard
+            // Put the the selected items to the drag board
             ClipboardContent content = new ClipboardContent();
-            content.put(BUTTON_TYPE, index);
+            content.putString(color);
 
             dragboard.setContent(content);
             event.consume();
         });
 
-        buttonTable.setOnDragDone(event -> {
-            System.out.println("Source Done!");
-            event.consume();
-        });
+        // System.out.println("Source Done!");
+        buttonTable.setOnDragDone(Event::consume);
 
         for(GridPane pane: panes) {
             pane.setOnDragDropped(event -> {
                 boolean dragCompleted = false;
-                System.out.println("Target dropped!");
+                // System.out.println("Target dropped!");
                 // Transfer the data to the target
                 Dragboard dragboard = event.getDragboard();
 
-                if (dragboard.hasContent(BUTTON_TYPE)) {
-                    int index = (int) dragboard.getContent(BUTTON_TYPE);
-                    Button button = mainApp.newButton(index);
+                if (dragboard.hasString()) {
+                    String color = dragboard.getString();
+                    Button button = mainApp.newButton(color);
                     button.setPrefSize(pane.getWidth(), pane.getHeight());
                     button.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
                     pane.getChildren().add(button);
@@ -128,16 +118,14 @@ public class DragTestController {
 
             pane.setOnDragOver(event -> {
                 Dragboard dragboard = event.getDragboard();
-                if (event.getGestureSource() != pane && dragboard.hasContent(BUTTON_TYPE)) {
+                if (event.getGestureSource() != pane && dragboard.hasString()) {
                     event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
                 }
                 event.consume();
             });
 
-            pane.setOnDragDone(event -> {
-                System.out.println("Target Done!");
-                event.consume();
-            });
+            // System.out.println("Target Done!");
+            pane.setOnDragDone(Event::consume);
         }
     }
 
