@@ -8,16 +8,10 @@ public class ButtonController {
     Button button;
 
     @FXML
-    private void initialize() {
-
-    }
+    private void initialize() {}
 
     @FXML
     void OnClick() {
         System.out.println("Hello, world!");
-    }
-
-    public Button getButton() {
-        return button;
     }
 }
