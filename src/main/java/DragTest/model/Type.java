@@ -3,14 +3,14 @@ package DragTest.model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class ButtonType {
+public class Type {
     private final StringProperty typeName;
 
-    public ButtonType() {
-        this(null);
+    public Type() {
+        this("");
     }
 
-    public ButtonType(String name) {
+    public Type(String name) {
         typeName = new SimpleStringProperty(name);
     }
 
@@ -18,8 +18,8 @@ public class ButtonType {
         return typeName.get();
     }
 
-    public void setTypename(String name) {
-        typeName.set(name);
+    public void setTypeName(String name) {
+        this.typeName.set(name);
     }
 
     public StringProperty typeNameProperty() {

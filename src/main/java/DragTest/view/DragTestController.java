@@ -1,30 +1,36 @@
 package DragTest.view;
 
 import DragTest.MainApp;
-import DragTest.model.ButtonType;
+import DragTest.model.Type;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
+
+import java.io.File;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 public class DragTestController {
     // Reference to the main application
     private MainApp mainApp;
-    private static final DataFormat BUTTON_TYPE = new DataFormat("ButtonType");
+    private static final DataFormat BUTTON_TYPE = new DataFormat("Type");
 
     public DragTestController() {}
 
     @FXML
-    private TableView<ButtonType> buttonTable;
+    private TableView<Type> buttonTable;
 
     @FXML
-    private TableColumn<ButtonType, String> buttonTypeColumn;
+    private TableColumn<Type, String> buttonTypeColumn;
 
     @FXML
     private GridPane grid;
@@ -77,7 +83,7 @@ public class DragTestController {
         // source
         buttonTable.setOnDragDetected(event -> {
             int index = buttonTable.getSelectionModel().getFocusedIndex();
-            String color = mainApp.getButtonTypes().get(index).getTypeName();
+            String color = mainApp.getTypes().get(index).getTypeName();
 //            System.out.println("Select: " + color);
             // Initiate a drag-and-drop gesture
             Dragboard dragboard = buttonTable.startDragAndDrop(TransferMode.COPY_OR_MOVE);
@@ -136,6 +142,81 @@ public class DragTestController {
      */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
-        buttonTable.setItems(mainApp.getButtonTypes());
+        buttonTable.setItems(mainApp.getTypes());
+    }
+
+    @FXML
+    private void handleNew() {
+        TextInputDialog textInputDialog = new TextInputDialog();
+        textInputDialog.setTitle("New"); //設定對話框視窗的標題列文字
+        textInputDialog.setHeaderText(null); //設定對話框視窗裡的標頭文字。若設為空字串，則表示無標頭
+        textInputDialog.setContentText("Input a new Button Type:"); //設定對話框的訊息文字
+        final Optional<String> opt = textInputDialog.showAndWait();
+        String res;
+
+        try {
+            res = opt.get();
+        } catch (final NoSuchElementException e) {
+            res = null;
+        }
+        System.out.println(res);
+        if(res != null) {
+            Type type = new Type(res);
+            mainApp.getTypes().add(type);
+        }
+    }
+
+    @FXML
+    private void handleOpen() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File("src/main/resources/types"));
+
+        // Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show save file dialog
+        File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
+
+        if (file != null) {
+            mainApp.loadButtonTypesFromFile(file);
+        }
+    }
+
+    @FXML
+    private void handleSave() {
+        File personFile = mainApp.getTypesFilePath();
+        if (personFile != null) {
+            mainApp.saveButtonTypesToFile(personFile);
+        } else {
+            handleSaveAs();
+        }
+    }
+
+    @FXML
+    private void handleSaveAs() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File("src/main/resources/types"));
+
+        // Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "XML files (*.xml)", "*.xml");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show save file dialog
+        File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
+
+        if (file != null) {
+            // Make sure it has the correct extension
+            if (!file.getPath().endsWith(".xml")) {
+                file = new File(file.getPath() + ".xml");
+            }
+            mainApp.saveButtonTypesToFile(file);
+        }
+    }
+
+    @FXML
+    private void handleExit() {
+        System.exit(0);
     }
 }

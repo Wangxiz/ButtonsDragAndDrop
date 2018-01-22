@@ -9,9 +9,4 @@ public class ButtonController {
 
     @FXML
     private void initialize() {}
-
-    @FXML
-    void OnClick() {
-        System.out.println("Hello, world!");
-    }
 }
