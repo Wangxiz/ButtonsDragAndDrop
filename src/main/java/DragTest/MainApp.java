@@ -2,12 +2,11 @@ package DragTest;
 
 import DragTest.model.Type;
 import DragTest.model.TypeWrapper;
-import DragTest.view.DragTestController;
+import DragTest.control.DragTestController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -17,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import javax.xml.bind.JAXBContext;
@@ -61,12 +59,12 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        ObservableList<Screen> screenList = Screen.getScreens();
-        System.out.println("Screens Count: " + screenList.size());
-        // Print the details of all screens
-        for(Screen screen: screenList) {
-            System.out.println(screen);
-        }
+//        ObservableList<Screen> screenList = Screen.getScreens();
+//        System.out.println("Screens Count: " + screenList.size());
+//        // Print the details of all screens
+//        for(Screen screen: screenList) {
+//            System.out.println(screen);
+//        }
 
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("DragTest App");
@@ -79,11 +77,11 @@ public class MainApp extends Application {
             rootLayout = loader.load(fxmlStream);
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
-            Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
-            primaryStage.setX(visualBounds.getMinX());
-            primaryStage.setY(visualBounds.getMinY());
-            primaryStage.setWidth(visualBounds.getWidth());
-            primaryStage.setHeight(visualBounds.getHeight());
+//            Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
+//            primaryStage.setX(visualBounds.getMinX());
+//            primaryStage.setY(visualBounds.getMinY());
+//            primaryStage.setWidth(visualBounds.getWidth());
+//            primaryStage.setHeight(visualBounds.getHeight());
 //            primaryStage.setResizable(false);
 //            primaryStage.setFullScreen(true);
 

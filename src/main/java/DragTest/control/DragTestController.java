@@ -1,4 +1,4 @@
-package DragTest.view;
+package DragTest.control;
 
 import DragTest.MainApp;
 import DragTest.model.Type;
@@ -28,10 +28,6 @@ public class DragTestController {
     @FXML
     private ListView<Type> buttonList;
 
-    @FXML
-    private GridPane grid;
-
-//    @FXML
     private GridPane[] panes = new GridPane[12];
     @FXML
     private GridPane pane00;

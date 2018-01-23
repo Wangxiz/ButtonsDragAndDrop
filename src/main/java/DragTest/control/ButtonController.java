@@ -1,4 +1,4 @@
-package DragTest.view;
+package DragTest.control;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

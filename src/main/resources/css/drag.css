@@ -50,6 +50,15 @@
 }
 
 #button-table {
+    -fx-background-image: url("/images/table_202.png");
+    -fx-background-size: 20px;
+}
+
+#button-picture {
     -fx-background-image: url("/images/picture_20.png");
     -fx-background-size: 20px;
+}
+
+.list-cell {
+    -fx-alignment: center;
 }
