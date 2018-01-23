@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -16,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import javax.xml.bind.JAXBContext;
@@ -59,10 +61,17 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        ObservableList<Screen> screenList = Screen.getScreens();
+        System.out.println("Screens Count: " + screenList.size());
+        // Print the details of all screens
+        for(Screen screen: screenList) {
+            System.out.println(screen);
+        }
+
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("DragTest App");
-
         this.primaryStage.getIcons().add(new Image("images/drag.png"));
+
         try {
             FXMLLoader loader = new FXMLLoader();
             String fxmlDocPath = "src/main/java/DragTest/view/dragtest.fxml";
@@ -70,8 +79,13 @@ public class MainApp extends Application {
             rootLayout = loader.load(fxmlStream);
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
-            primaryStage.setFullScreen(true);
-            primaryStage.setAlwaysOnTop(true);
+            Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
+            primaryStage.setX(visualBounds.getMinX());
+            primaryStage.setY(visualBounds.getMinY());
+            primaryStage.setWidth(visualBounds.getWidth());
+            primaryStage.setHeight(visualBounds.getHeight());
+//            primaryStage.setResizable(false);
+//            primaryStage.setFullScreen(true);
 
             // Give the controller access to the main app.
             DragTestController controller = loader.getController();
@@ -108,6 +122,7 @@ public class MainApp extends Application {
             tooltip.setGraphic(webView);
             button.setTooltip(tooltip);
             button.setOnMouseClicked(event -> {
+                System.out.println(primaryStage.getScene().getFocusOwner());
                 System.out.println("Hello, " + color + " Wanting!");
             });
 

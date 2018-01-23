@@ -25,4 +25,9 @@ public class Type {
     public StringProperty typeNameProperty() {
         return typeName;
     }
+
+    @Override
+    public String toString() {
+        return typeName.get();
+    }
 }

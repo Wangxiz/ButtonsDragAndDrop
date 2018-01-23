@@ -4,12 +4,8 @@ import DragTest.MainApp;
 import DragTest.model.Type;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DataFormat;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
@@ -22,15 +18,15 @@ import java.util.Optional;
 public class DragTestController {
     // Reference to the main application
     private MainApp mainApp;
-    private static final DataFormat BUTTON_TYPE = new DataFormat("Type");
-
-    public DragTestController() {}
 
     @FXML
     private TableView<Type> buttonTable;
 
     @FXML
     private TableColumn<Type, String> buttonTypeColumn;
+
+    @FXML
+    private ListView<Type> buttonList;
 
     @FXML
     private GridPane grid;
@@ -62,6 +58,8 @@ public class DragTestController {
     @FXML
     private GridPane pane51;
 
+    public DragTestController() {}
+
     @FXML
     private void initialize() {
         panes[0] = pane00;
@@ -84,7 +82,7 @@ public class DragTestController {
         buttonTable.setOnDragDetected(event -> {
             int index = buttonTable.getSelectionModel().getFocusedIndex();
             String color = mainApp.getTypes().get(index).getTypeName();
-//            System.out.println("Select: " + color);
+
             // Initiate a drag-and-drop gesture
             Dragboard dragboard = buttonTable.startDragAndDrop(TransferMode.COPY_OR_MOVE);
 
@@ -102,7 +100,6 @@ public class DragTestController {
         for(GridPane pane: panes) {
             pane.setOnDragDropped(event -> {
                 boolean dragCompleted = false;
-                // System.out.println("Target dropped!");
                 // Transfer the data to the target
                 Dragboard dragboard = event.getDragboard();
 
@@ -143,6 +140,7 @@ public class DragTestController {
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
         buttonTable.setItems(mainApp.getTypes());
+        buttonList.setItems(mainApp.getTypes());
     }
 
     @FXML
@@ -218,5 +216,24 @@ public class DragTestController {
     @FXML
     private void handleExit() {
         System.exit(0);
+    }
+
+    @FXML
+    private void handlePress() {
+        System.out.println(mainApp.getPrimaryStage().getScene().getFocusOwner());
+    }
+
+    @FXML
+    private void handleList() {
+        buttonTable.setVisible(false);
+        buttonTable.toBack();
+        buttonList.setVisible(true);
+    }
+
+    @FXML
+    private void handleTable() {
+        buttonList.setVisible(false);
+        buttonList.toBack();
+        buttonTable.setVisible(true);
     }
 }
