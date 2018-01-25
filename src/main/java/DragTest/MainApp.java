@@ -89,6 +89,7 @@ public class MainApp extends Application {
             DragTestController controller = loader.getController();
             controller.setMainApp(this);
 
+            primaryStage.setMaximized(true);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();

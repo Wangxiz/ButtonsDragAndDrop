@@ -40,9 +40,9 @@
                            <bottom>
                               <ToolBar maxHeight="-Infinity" minHeight="-Infinity" prefHeight="22.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                 <items>
-                                  <Button id="button-list" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleList" prefHeight="20.0" prefWidth="20.0" textAlignment="CENTER" />
-                                    <Button id="button-table" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleTable" prefHeight="20.0" prefWidth="20.0" textAlignment="CENTER" />
-                                    <Button id="button-picture" alignment="CENTER" layoutX="34.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleTable" prefHeight="20.0" prefWidth="20.0" textAlignment="CENTER" />
+                                  <Button id="button-list" styleClass="button-show" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleList" prefHeight="20.0" prefWidth="20.0" textAlignment="CENTER" />
+                                    <Button id="button-table" styleClass="button-show" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleTable" prefHeight="20.0" prefWidth="20.0" textAlignment="CENTER" />
+                                    <Button id="button-picture" styleClass="button-show" alignment="CENTER" layoutX="34.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleTable" prefHeight="20.0" prefWidth="20.0" textAlignment="CENTER" />
                                 </items>
                               </ToolBar>
                            </bottom>
